@@ -68,13 +68,12 @@
             left: 10px;
         }
 
-        /* Position the difficulty buttons at the right side, vertically stacked */
         #difficulty-buttons {
             position: absolute;
-            top: 20px;
-            right: 20px; /* Align to the right end of the game area */
+            top: 40px;
+            right: 10px; /* Align to the right end */
             display: flex;
-            flex-direction: column;
+            flex-direction: column; /* Stack buttons vertically */
             gap: 10px; /* Space between buttons */
         }
 
@@ -86,7 +85,6 @@
             border: 2px solid #000;
             border-radius: 10px;
             transition: transform 0.2s;
-            margin-top: 20px;
         }
 
         .difficulty-button:hover {
@@ -99,7 +97,6 @@
             border-color: #006400;
         }
 
-        /* Start button centered */
         #start-button {
             position: absolute;
             top: 50%;
@@ -126,15 +123,11 @@
         <div id="timer">Time: 60</div>
         <div id="high-score">High Score: 0</div>
         <div class="player" id="player"></div>
-        
-        <!-- Difficulty buttons on the right side -->
         <div id="difficulty-buttons">
             <button class="difficulty-button" id="easy">Easy</button>
             <button class="difficulty-button" id="medium">Medium</button>
             <button class="difficulty-button" id="hard">Hard</button>
         </div>
-        
-        <!-- Start button centered -->
         <button id="start-button">Start Game</button>
     </div>
 
@@ -156,7 +149,8 @@
         let timeRemaining = 60; // Timer set to 60 seconds
         let timerInterval;
         let isGameActive = false;
-        let highScore = 0;
+        let highScore = localStorage.getItem('highScore') ? parseInt(localStorage.getItem('highScore')) : 0;
+        highScoreDisplay.textContent = `High Score: ${highScore}`;
 
         // Set up player movement
         const playerWidth = 100;
@@ -242,10 +236,13 @@
         function endGame() {
             isGameActive = false;
 
-            // Update high score
+            // Update high score if the current score is greater
             if (score > highScore) {
                 highScore = score;
                 highScoreDisplay.textContent = `High Score: ${highScore}`;
+
+                // Save the new high score in localStorage
+                localStorage.setItem('highScore', highScore);
             }
 
             alert(`Time's up! Your score is ${score}`);
