@@ -259,6 +259,14 @@
 
         // Start game logic
         startButton.addEventListener('click', () => {
+            // Check if a difficulty has been selected
+            if (!easyButton.classList.contains('selected') &&
+                !mediumButton.classList.contains('selected') &&
+                !hardButton.classList.contains('selected')) {
+                alert("Please select the level!");
+                return; // Stop the game from starting if no level is selected
+            }
+
             isGameActive = true;
             startButton.style.display = 'none';
             startTimer();
